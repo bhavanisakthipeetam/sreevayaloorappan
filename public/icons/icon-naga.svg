@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <circle cx="32" cy="32" r="30" fill="rgba(22,61,40,0.8)" stroke="rgba(240,180,41,0.5)" stroke-width="1.5"/>
+  <!-- Serpent coil -->
+  <path d="M32 50 Q16 48 16 36 Q16 24 28 22 Q40 20 42 30 Q44 40 34 42 Q26 44 24 36 Q22 28 30 27"
+        stroke="#f0b429" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <!-- Snake head -->
+  <ellipse cx="30" cy="24" rx="5" ry="4" fill="none" stroke="#fde68a" stroke-width="1.5" transform="rotate(-20 30 24)"/>
+  <!-- Hood lines -->
+  <path d="M26 22 Q23 18 26 15" stroke="#f0b429" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M34 22 Q37 18 34 15" stroke="#f0b429" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <!-- Eyes -->
+  <circle cx="29" cy="23" r="1.2" fill="#fde68a"/>
+  <circle cx="33" cy="23" r="1.2" fill="#fde68a"/>
+  <!-- Tongue -->
+  <path d="M30 27 Q30 30 28 31 M30 27 Q30 30 32 31" stroke="#fde68a" stroke-width="0.8" stroke-linecap="round"/>
+</svg>

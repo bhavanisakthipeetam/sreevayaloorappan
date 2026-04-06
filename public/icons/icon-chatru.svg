@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" fill="none">
+  <circle cx="28" cy="28" r="27" fill="rgba(22,61,40,0.7)" stroke="rgba(240,180,41,0.4)" stroke-width="1"/>
+  <!-- Shield -->
+  <path d="M28 10 L44 18 L44 32 Q44 44 28 50 Q12 44 12 32 L12 18 Z"
+        stroke="#f0b429" stroke-width="1.5" fill="rgba(240,180,41,0.07)"/>
+  <!-- Lightning bolt / protection symbol -->
+  <path d="M33 18 L25 28 L30 28 L23 40 L33 26 L28 26 Z"
+        stroke="#fde68a" stroke-width="1.2" fill="rgba(253,230,138,0.15)"/>
+</svg>

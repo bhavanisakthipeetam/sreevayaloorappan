@@ -1,0 +1,134 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import LanguagePicker from "@components/LanguagePicker.astro";
+import { t } from "@i18n/translations";
+
+const locale = Astro.currentLocale ?? "en";
+const currentPath = Astro.url.pathname;
+const basePath = currentPath.replace(/^\/([A-Za-z]{2}(?:-[A-Za-z]+)?)\//, "/");
+
+const href = (p: string) =>
+  !p || p === "#" ? p : getRelativeLocaleUrl(locale, p.replace(/^\//, ""));
+
+const isActive = (p: string) =>
+  basePath === p || (p === "/" && (basePath === "" || basePath === "/"));
+
+const links = [
+  { label: t("nav_home",      locale), path: "/" },
+  { label: t("nav_history",   locale), path: "/history" },
+  { label: t("nav_offerings", locale), path: "/offerings" },
+  { label: t("nav_visit",     locale), path: "/visit" },
+];
+---
+
+<!-- Notice banner -->
+<div class="notice-banner">{t("notice", locale)}</div>
+
+<!-- Navbar -->
+<nav id="navbar" class="fixed w-full z-[1000] transition-all duration-400" style="top:28px; padding:1.2rem 0;">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href={href("/")} class="flex items-center gap-3 no-underline group">
+        <div class="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 group-hover:scale-105"
+             style="border:1.5px solid rgba(240,180,41,0.5); box-shadow:0 0 16px rgba(240,180,41,0.12);">
+          <img src="/images/logo.svg" alt="Temple Logo" class="w-full h-full object-cover" loading="eager"/>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-accent text-gold tracking-widest leading-none" style="font-size:0.85rem;">Vayaloorappan</span>
+          <span class="font-accent text-text-mute tracking-[0.2em] leading-none uppercase" style="font-size:0.5rem;">
+            Kiratha Sastha Kshetram
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="hidden lg:flex items-center gap-1 list-none m-0 p-0">
+        {links.map(({ label, path }) => (
+          <li>
+            <a href={href(path)}
+               class:list={[
+                 "font-accent text-[0.65rem] tracking-[0.18em] uppercase px-3.5 py-2 rounded relative transition-all duration-300 no-underline",
+                 "after:content-[''] after:absolute after:bottom-0.5 after:left-1/2 after:-translate-x-1/2 after:h-px after:bg-gold after:transition-all after:duration-300",
+                 isActive(path)
+                   ? "text-gold after:w-3/5"
+                   : "text-text-sec hover:text-gold after:w-0 hover:after:w-3/5",
+               ]}>
+              {label}
+            </a>
+          </li>
+        ))}
+        <li class="ml-3"><LanguagePicker /></li>
+      </ul>
+
+      <!-- Mobile -->
+      <div class="flex lg:hidden items-center gap-3">
+        <LanguagePicker />
+        <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false"
+                class="flex flex-col items-center justify-center gap-1.5 w-10 h-10 rounded transition-all duration-300"
+                style="border:1px solid rgba(240,180,41,0.35);background:transparent;color:#f0b429;">
+          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar1"></span>
+          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar2"></span>
+          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar3"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="nav-mobile" class="hidden flex-col lg:hidden border-t mt-3 pt-2"
+         style="border-color:rgba(154,110,10,0.2);">
+      {links.map(({ label, path }) => (
+        <a href={href(path)}
+           class:list={[
+             "font-accent text-xs tracking-[0.18em] uppercase py-3.5 px-1 transition-all duration-200 no-underline border-b",
+             isActive(path) ? "text-gold" : "text-text-sec hover:text-gold",
+           ]}
+           style="border-color:rgba(154,110,10,0.15);">
+          {label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const nav  = document.getElementById("navbar");
+  const scrolled = () => {
+    if (window.scrollY > 60) {
+      nav?.style.setProperty("background", "rgba(253,248,240,0.96)");
+      nav?.style.setProperty("backdrop-filter", "blur(16px)");
+      nav?.style.setProperty("border-bottom", "1px solid rgba(154,110,10,0.2)");
+      nav?.style.setProperty("padding", "0.65rem 0");
+      nav?.style.setProperty("box-shadow", "0 4px 32px rgba(0,0,0,0.06)");
+    } else {
+      nav?.style.setProperty("background", "transparent");
+      nav?.style.setProperty("backdrop-filter", "none");
+      nav?.style.setProperty("border-bottom", "none");
+      nav?.style.setProperty("padding", "1.2rem 0");
+      nav?.style.setProperty("box-shadow", "none");
+    }
+  };
+  window.addEventListener("scroll", scrolled, { passive:true });
+  scrolled();
+
+  const toggle = document.getElementById("nav-toggle");
+  const mobile = document.getElementById("nav-mobile");
+  const bar1   = document.getElementById("bar1");
+  const bar2   = document.getElementById("bar2");
+  const bar3   = document.getElementById("bar3");
+  toggle?.addEventListener("click", () => {
+    const open = mobile?.classList.toggle("hidden") === false;
+    mobile?.classList.toggle("flex", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    if (bar1 && bar2 && bar3) {
+      if (open) {
+        bar1.style.transform = "rotate(45deg) translate(4px,5px)";
+        bar2.style.opacity   = "0";
+        bar3.style.transform = "rotate(-45deg) translate(4px,-5px)";
+      } else {
+        [bar1, bar2, bar3].forEach(b => { b.style.transform = ""; b.style.opacity = ""; });
+      }
+    }
+  });
+</script>

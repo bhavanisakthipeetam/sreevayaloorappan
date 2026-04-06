@@ -1,0 +1,65 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { t } from "@i18n/translations";
+
+const locale = Astro.currentLocale ?? "en";
+const href = (p: string) => getRelativeLocaleUrl(locale, p);
+---
+
+<footer class="pt-14 pb-8" style="background:#f0e8d8; border-top: 1px solid var(--border-gold);">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-10">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <img src="/images/logo.png" alt="Logo" class="w-9 h-9 opacity-70" />
+          <div>
+            <div class="font-heading text-gold text-sm tracking-widest">Sree Vayaloorappan</div>
+            <div class="font-heading text-text-mute tracking-[0.2em] uppercase" style="font-size:0.55rem;">
+              Kiratha Sastha Kshetram
+            </div>
+          </div>
+        </div>
+        <p class="text-text-mute text-sm max-w-xs">{t("footer_desc", locale)}</p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-heading text-text-mute tracking-[0.2em] uppercase mb-4 pb-2 text-[0.62rem]"
+            style="border-bottom: 1px solid var(--border-gold-light);">
+          {t("footer_links", locale)}
+        </h4>
+        <ul class="space-y-2 list-none p-0 m-0">
+          <li><a href={href("/")}          class="text-text-mute hover:text-gold text-sm transition-colors no-underline">{t("nav_home",      locale)}</a></li>
+          <li><a href={href("/history")}   class="text-text-mute hover:text-gold text-sm transition-colors no-underline">{t("nav_history",   locale)}</a></li>
+          <li><a href={href("/offerings")} class="text-text-mute hover:text-gold text-sm transition-colors no-underline">{t("nav_offerings", locale)}</a></li>
+          <li><a href={href("/visit")}     class="text-text-mute hover:text-gold text-sm transition-colors no-underline">{t("nav_visit",     locale)}</a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <h4 class="font-heading text-text-mute tracking-[0.2em] uppercase mb-4 pb-2 text-[0.62rem]"
+            style="border-bottom: 1px solid var(--border-gold-light);">
+          {t("footer_info", locale)}
+        </h4>
+        <ul class="space-y-2 list-none p-0 m-0 text-sm text-text-mute">
+          <li>{t("footer_open",    locale)}</li>
+          <li>{t("footer_timings", locale)}</li>
+          <li>Vayaloor, Kerala</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-gold"></div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-2 mt-6
+                font-heading text-text-mute uppercase tracking-widest text-[0.6rem]">
+      <span>{t("footer_copy", locale)}</span>
+      <span class="text-gold-dim text-base">ॐ</span>
+    </div>
+  </div>
+</footer>

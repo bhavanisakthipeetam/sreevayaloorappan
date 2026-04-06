@@ -1,0 +1,210 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { t } from "@i18n/translations";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { LOCALES } from "@i18n/locales";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const locale = Astro.currentLocale ?? "en";
+const href   = (p: string) => getRelativeLocaleUrl(locale, p);
+
+const pooramDates = [
+  { month: "Meenam",     period: "March / April",  status: "upcoming" },
+  { month: "Medam",      period: "April / May",     status: "pending" },
+  { month: "Edavam",     period: "May / June",      status: "pending" },
+  { month: "Mithunam",   period: "June / July",     status: "pending" },
+  { month: "Karkidakam", period: "July / August",   status: "pending" },
+];
+
+const tips = [
+  { icon: "📅", title: "Book in Advance",  body: "Contact the temple before the Pooram date to confirm your offering and plan travel." },
+  { icon: "👗", title: "Dress Code",        body: "Traditional attire is preferred. Devotees are requested to dress modestly and respectfully." },
+  { icon: "🕗", title: "Arrive Early",      body: "Darshan closes at 12:00 PM sharp. Arriving before 8 AM ensures a peaceful experience." },
+];
+---
+
+<BaseLayout title={t("nav_visit", locale)} description={t("visit_desc", locale)}>
+
+  <!-- PAGE HERO with forest path image -->
+  <section class="relative overflow-hidden text-center py-36" style="border-bottom:1px solid var(--border-gold);">
+    <div class="absolute inset-0" aria-hidden="true">
+      <img
+        src="/images/temple-path.jpg"
+        alt=""
+        class="w-full h-full object-cover"
+        style="opacity:0.18; filter: sepia(0.4) saturate(0.6);"
+      />
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.82) 100%);"></div>
+    </div>
+    <div class="relative z-10 max-w-2xl mx-auto px-6">
+      <span class="section-label">{t("visit_label", locale)}</span>
+      <h1 class="mb-4">{t("visit_heading", locale)}</h1>
+      <p class="text-text-sec text-lg">{t("visit_desc", locale)}</p>
+    </div>
+  </section>
+
+  <!-- IMPORTANT NOTICE STRIP -->
+  <section class="py-10" style="background: linear-gradient(135deg, #7a2e14, #b04a2a);">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap gap-6 items-start">
+      <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl flex-shrink-0"
+           style="background:rgba(0,0,0,0.2);">⚠️</div>
+      <div class="flex-1 min-w-64">
+        <h3 class="text-xl mb-2" style="color:#f5edd8;">{t("darshan_heading", locale)}</h3>
+        <p class="m-0" style="color:rgba(245,237,216,0.9);">{t("darshan_body", locale)}</p>
+      </div>
+      <div class="text-center rounded-lg px-8 py-5 flex-shrink-0" style="background:rgba(0,0,0,0.25);">
+        <p class="font-heading tracking-widest uppercase mb-1" style="font-size:0.6rem; color:rgba(245,237,216,0.6);">Timings</p>
+        <p class="font-heading text-xl m-0" style="color:#f5edd8;">{t("darshan_time", locale)}</p>
+        <p class="text-xs mt-1 m-0" style="color:rgba(245,237,216,0.7);">Pooram Nakshatra only</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
+  <section class="py-24" style="background:#f5ede0; border-top:1px solid var(--border-gold);">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-8">
+
+      <!-- Left column -->
+      <div class="space-y-6">
+
+        <!-- How to reach -->
+        <div class="rounded-lg p-8 reveal" style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <h3 class="text-base mb-6 pb-4" style="border-bottom:1px solid var(--border-gold-light);">
+            🗺️ {t("reach_heading", locale)}
+          </h3>
+          <div class="info-row">
+            <div class="info-icon">✈️</div>
+            <div>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">By Air</strong>
+              <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_air", locale)}</p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">🚂</div>
+            <div>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">By Train</strong>
+              <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_train", locale)}</p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">📍</div>
+            <div>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Address</strong>
+              <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_address", locale)}</p>
+            </div>
+          </div>
+          <a href="https://maps.google.com?q=Vayaloor+Kerala" target="_blank" rel="noopener"
+             class="btn-outline w-full text-center block mt-6">
+            {t("cta_directions", locale)}
+          </a>
+        </div>
+
+        <!-- Travel tips -->
+        <div class="rounded-lg p-8 reveal reveal-d1" style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <h3 class="text-base mb-6 pb-4" style="border-bottom:1px solid var(--border-gold-light);">🧳 Travel Tips</h3>
+          {tips.map(({ icon, title, body }) => (
+            <div class="info-row">
+              <div class="info-icon">{icon}</div>
+              <div>
+                <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{title}</strong>
+                <p class="text-sm m-0 mt-1 text-text-mute">{body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="space-y-6" id="contact">
+
+        <!-- Contact card -->
+        <div class="rounded-lg p-8 reveal reveal-d1" style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <h3 class="text-base mb-4 pb-4" style="border-bottom:1px solid var(--border-gold-light);">
+            📞 {t("contact_heading", locale)}
+          </h3>
+          <p class="text-sm mb-6">{t("contact_body", locale)}</p>
+
+          <div class="info-row">
+            <div class="info-icon">📱</div>
+            <div>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Phone / WhatsApp</strong>
+              <p class="font-heading text-gold tracking-widest mt-1 m-0" style="font-size:1rem;">
+                [Contact Number to be added]
+              </p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">✉️</div>
+            <div>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Email</strong>
+              <p class="text-gold mt-1 m-0">[Email to be added]</p>
+            </div>
+          </div>
+
+          <div class="flex gap-3 flex-wrap mt-6">
+            <a href="tel:" class="btn-gold flex-1 text-center">{t("cta_call", locale)}</a>
+            <a href="mailto:" class="btn-outline flex-1 text-center">Email Temple</a>
+          </div>
+        </div>
+
+        <!-- Pooram dates -->
+        <div class="rounded-lg p-8 reveal reveal-d2" style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <h3 class="text-base mb-4 pb-4" style="border-bottom:1px solid var(--border-gold-light);">
+            🌟 {t("upcoming_heading", locale)}
+          </h3>
+          <p class="text-sm mb-4">Darshan is held once every Malayalam month on Pooram Nakshatra. Contact the temple for exact dates.</p>
+
+          <table class="pooram-table">
+            <thead>
+              <tr>
+                <th>Malayalam Month</th>
+                <th>Approx. Period</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pooramDates.map(({ month, period, status }) => (
+                <tr>
+                  <td>{month}</td>
+                  <td>{period}</td>
+                  <td style={status === "upcoming" ? "color:#6b9b6e;" : "color:#8a7a5a;"}>
+                    {status === "upcoming" ? "◉ Upcoming" : "○ Confirm"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p class="text-xs text-text-mute mt-4 italic">
+            * Exact dates vary each year. Please contact the temple directly to confirm.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP AREA with aerial/map image -->
+  <section style="border-top:1px solid var(--border-gold);">
+    <div class="relative w-full overflow-hidden" style="height:280px;">
+      <img
+        src="/images/temple-aerial.jpg"
+        alt="Aerial view of Vayaloor temple area"
+        class="w-full h-full object-cover"
+        style="opacity:0.55; filter: sepia(0.2) saturate(0.85);"
+        loading="lazy"
+      />
+      <div class="absolute inset-0" style="background: rgba(253,248,240,0.6);"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+        <h3 class="text-base mb-2">Sree Vayaloorappan Kshetram</h3>
+        <p class="text-text-mute text-sm mb-6">Vayaloor, Kerala</p>
+        <a href="https://maps.google.com?q=Vayaloor+Kerala" target="_blank" rel="noopener" class="btn-outline">
+          {t("cta_directions", locale)}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

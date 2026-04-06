@@ -1,0 +1,246 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { t } from "@i18n/translations";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { LOCALES } from "@i18n/locales";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const locale = Astro.currentLocale ?? "en";
+const href = (p: string) => getRelativeLocaleUrl(locale, p);
+
+const deities = [
+  { icon: "/icons/icon-sastha.svg",     image: "/images/deity-sastha.jpg",     nameKey: "deity_1_name", roleKey: "deity_1_role", descKey: "deity_1_desc" },
+  { icon: "/icons/icon-bhadrakali.svg", image: "/images/deity-bhadrakali.jpg", nameKey: "deity_2_name", roleKey: "deity_2_role", descKey: "deity_2_desc" },
+  { icon: "/icons/icon-ganapathi.svg",  image: "/images/deity-ganapathi.jpg",  nameKey: "deity_3_name", roleKey: "deity_3_role", descKey: "deity_3_desc" },
+  { icon: "/icons/icon-naga.svg",       image: "/images/deity-naga.jpg",       nameKey: "deity_4_name", roleKey: "deity_4_role", descKey: "deity_4_desc" },
+  { icon: "/icons/icon-gulikan.svg",    image: "/images/deity-gulikan.jpg",    nameKey: "deity_5_name", roleKey: "deity_5_role", descKey: "deity_5_desc" },
+] as const;
+
+const offerings = [
+  { num:"01", icon:"/icons/icon-kula-deiva.svg", nameKey:"off_1_name", subKey:"off_1_sub", bodyKey:"off_1_body" },
+  { num:"02", icon:"/icons/icon-shani.svg",       nameKey:"off_2_name", subKey:"off_2_sub", bodyKey:"off_2_body" },
+  { num:"03", icon:"/icons/icon-chatru.svg",      nameKey:"off_3_name", subKey:"off_3_sub", bodyKey:"off_3_body" },
+  { num:"04", icon:"/icons/icon-navagraha.svg",   nameKey:"off_4_name", subKey:"off_4_sub", bodyKey:"off_4_body" },
+] as const;
+
+const hills = [
+  { dir:"E",  name:"Varadu Malai" },
+  { dir:"SE", name:"Thumbiyar Mudi" },
+  { dir:"S",  name:"Elai Malai" },
+  { dir:"SW", name:"Kallada Kotta Mala" },
+  { dir:"W",  name:"Malleswara Mudi" },
+  { dir:"NW", name:"Kotta Malai" },
+  { dir:"N",  name:"Chavadi Malai" },
+  { dir:"NE", name:"Perumal Malai" },
+];
+---
+
+<BaseLayout title={t("nav_home", locale)}>
+
+  <!-- ════ HERO ════ -->
+  <section class="relative min-h-screen flex flex-col justify-center overflow-hidden" style="padding:9rem 0 5rem;">
+    <!-- Bg overlays -->
+    <div class="absolute inset-0" style="z-index:1;
+      background:
+        radial-gradient(ellipse 55% 75% at 65% 45%, rgba(212,168,67,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 15% 85%, rgba(245,237,224,0.7) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(253,248,240,0.05) 0%, rgba(253,248,240,0.5) 100%);
+    "></div>
+
+    <!-- Hero photo -->
+    <div class="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden" aria-hidden="true" style="z-index:0;">
+      <img src="/images/hero-bg.jpg" alt="" class="w-full h-full object-cover"
+           style="opacity:0.65; filter:sepia(0.2) saturate(0.85);" loading="eager"/>
+      <div class="absolute inset-0" style="background:linear-gradient(90deg,#fdf8f0 0%,transparent 45%);"></div>
+      <div class="absolute inset-0" style="background:linear-gradient(180deg,transparent 55%,#fdf8f0 100%);"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative max-w-6xl mx-auto px-6" style="z-index:2;">
+      <div class="max-w-2xl">
+
+        <p class="font-accent text-jade tracking-[0.3em] uppercase text-xs mb-6 flex items-center gap-3 animate-fade-up"
+           style="animation-delay:0.1s;">
+          <span style="width:36px;height:1px;background:#3cb371;display:inline-block;"></span>
+          {t("hero_kicker", locale)}
+        </p>
+
+        <h1 class="animate-fade-up mb-3" style="animation-delay:0.2s; line-height:1.1; letter-spacing:0.01em;">
+          {t("hero_title", locale)}
+        </h1>
+
+        <p class="font-display italic text-ivory-dim animate-fade-up mb-6"
+           style="font-size:clamp(1rem,2.2vw,1.3rem); animation-delay:0.3s; letter-spacing:0.05em; font-weight:300;">
+          {t("hero_subtitle", locale)}
+        </p>
+
+        <p class="font-body text-text-sec animate-fade-up max-w-xl mb-10 leading-relaxed"
+           style="font-size:1.05rem; animation-delay:0.4s; font-weight:400;">
+          {t("hero_desc", locale)}
+        </p>
+
+        <div class="flex flex-wrap gap-4 animate-fade-up" style="animation-delay:0.5s;">
+          <a href={href("/history")}  class="btn-gold">{t("hero_cta1", locale)}</a>
+          <a href={href("/offerings")} class="btn-outline">{t("hero_cta2", locale)}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <a href="#intro" aria-label="Scroll" class="absolute bottom-10 left-1/2 font-accent text-text-mute uppercase tracking-[0.22em] text-[0.58rem] flex flex-col items-center gap-2 no-underline animate-bob" style="z-index:2;">
+      <span>Scroll</span>
+      <span style="width:1px;height:38px;background:linear-gradient(180deg,#c9952a,transparent);"></span>
+    </a>
+  </section>
+
+  <!-- ════ INTRO ════ -->
+  <section id="intro" class="py-24 relative overflow-hidden"
+    style="background:#f5ede0; border-top:1px solid rgba(154,110,10,0.2); border-bottom:1px solid rgba(154,110,10,0.2);">
+    <!-- Ambient glow -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+         style="background:radial-gradient(ellipse 60% 80% at 10% 50%, rgba(212,168,67,0.08) 0%, transparent 65%);"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 grid lg:grid-cols-[auto_1fr] gap-16 items-center">
+      <!-- Decorative vertical Om -->
+      <div class="hidden lg:flex items-center justify-center w-16" aria-hidden="true">
+        <span class="font-display text-gold select-none"
+              style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:1.4rem;letter-spacing:0.3em;opacity:0.12;font-weight:300;white-space:nowrap;">
+          ॐ शरणम् शास्ता
+        </span>
+      </div>
+
+      <div class="reveal">
+        <span class="section-label">{t("intro_label", locale)}</span>
+        <h2 class="mb-4" style="font-size:clamp(1.5rem,3vw,2.2rem);">{t("intro_heading", locale)}</h2>
+        <span class="divider-sm"></span>
+        <p style="font-size:1.05rem; line-height:1.85;">{t("intro_body1", locale)}</p>
+        <p style="font-size:1.05rem; line-height:1.85;">{t("intro_body2", locale)}</p>
+
+        <blockquote class="font-display italic text-ivory-dim my-7 pl-6"
+                    style="font-size:1.2rem;border-left:3px solid #f0b429;line-height:1.7;font-weight:300;">
+          {t("intro_quote", locale)}
+        </blockquote>
+
+        <a href={href("/history")} class="btn-outline">{t("hero_cta1", locale)}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ DEITIES ════ -->
+  <section class="py-24" style="background:#fdf8f0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal mb-14">
+        <span class="section-label">{t("deities_label", locale)}</span>
+        <h2 class="mb-2">{t("deities_heading", locale)}</h2>
+        <div class="divider-center"><span class="text-gold" style="font-size:1.1rem;">✦</span></div>
+        <p class="max-w-lg mx-auto mt-3" style="font-size:1rem;">{t("deities_sub", locale)}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {deities.map(({ icon, image, nameKey, roleKey, descKey }, i) => (
+          <div class:list={["deity-card reveal", i===1&&"reveal-d1", i===2&&"reveal-d2", i===3&&"reveal-d3"]}>
+            <!-- Deity image with icon overlay -->
+            <div class="relative w-full rounded-md overflow-hidden mb-5"
+                 style="aspect-ratio:16/9; border:1px solid rgba(45,122,78,0.3);">
+              <img src={image} alt={t(nameKey, locale)} class="w-full h-full object-cover"
+                   style="filter:sepia(0.15) saturate(0.9);" loading="lazy"/>
+              <!-- Icon badge -->
+              <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full overflow-hidden"
+                   style="border:1px solid rgba(154,110,10,0.4); background:rgba(255,253,247,0.9); backdrop-filter:blur(4px);">
+                <img src={icon} alt="" class="w-full h-full" aria-hidden="true"/>
+              </div>
+            </div>
+            <h3 style="font-size:1.2rem; margin-bottom:0.25rem;">{t(nameKey, locale)}</h3>
+            <p class="font-accent text-sage tracking-widest uppercase mb-3" style="font-size:0.6rem;">{t(roleKey, locale)}</p>
+            <p style="font-size:0.9rem; color:#4a7a5a; line-height:1.7;">{t(descKey, locale)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ MOUNTAINS ════ -->
+  <section class="py-24" style="background:#f5ede0; border-top:1px solid rgba(154,110,10,0.2); border-bottom:1px solid rgba(154,110,10,0.2);">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal max-w-xl mx-auto mb-12">
+        <span class="section-label">{t("hills_label", locale)}</span>
+        <h2 class="mb-2">{t("hills_heading", locale)}</h2>
+        <div class="divider-center">
+          <img src="/icons/icon-mountain.svg" class="w-8 h-8" alt="" aria-hidden="true"/>
+        </div>
+        <p class="mt-3" style="font-size:1rem;">{t("hills_body", locale)}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 reveal max-w-3xl mx-auto">
+        {hills.map(({ dir, name }) => (
+          <div class="mountain-item">
+            <span class="dir-badge">{dir}</span>
+            <span class="font-body text-ivory" style="font-size:0.88rem; font-weight:500;">{name}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-10">
+        <a href={href("/history#hills")} class="btn-outline">{t("cta_history", locale)}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ OFFERINGS ════ -->
+  <section class="py-24" style="background:#fdf8f0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal max-w-xl mx-auto mb-12">
+        <span class="section-label">{t("offerings_label", locale)}</span>
+        <h2 class="mb-2">{t("offerings_heading", locale)}</h2>
+        <div class="divider-center"><span class="text-gold" style="font-size:1.1rem;">✦</span></div>
+        <p class="mt-3" style="font-size:1rem;">{t("offerings_desc", locale)}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {offerings.map(({ num, icon, nameKey, subKey, bodyKey }, i) => (
+          <div class:list={["offering-card reveal", i===1&&"reveal-d1", i===2&&"reveal-d2", i===3&&"reveal-d3"]}>
+            <div class="flex items-center gap-4 mb-4">
+              <img src={icon} alt="" class="w-12 h-12 flex-shrink-0" aria-hidden="true"/>
+              <span class="font-accent text-gold-muted tracking-[0.2em] text-xs">{num}</span>
+            </div>
+            <h3 style="font-size:1.25rem; margin-bottom:0.3rem;">{t(nameKey, locale)}</h3>
+            <p class="font-display italic text-sage mb-3" style="font-size:0.95rem;">{t(subKey, locale)}</p>
+            <p style="font-size:0.9rem; line-height:1.75;">{t(bodyKey, locale)}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-12">
+        <a href={href("/offerings")} class="btn-gold">{t("cta_book", locale)}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CTA STRIP ════ -->
+  <section class="py-14" style="background:linear-gradient(135deg,#9a6e0a,#c9952a); border-top:1px solid rgba(154,110,10,0.2);">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-8">
+      <div>
+        <h3 style="color:#fdf8f0; font-size:1.7rem; margin-bottom:0.3rem; font-weight:500;">Plan Your Pilgrimage</h3>
+        <p style="color:rgba(253,248,240,0.85); font-size:0.95rem; margin:0; font-weight:400;">
+          {t("darshan_time", locale)} · Pooram Nakshatra only
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href={href("/visit")}
+           class="font-accent text-xs tracking-widest uppercase py-3 px-6 rounded no-underline transition-all duration-300"
+           style="background:rgba(253,248,240,0.15);border:1px solid rgba(253,248,240,0.4);color:#fdf8f0;">
+          {t("nav_visit", locale)}
+        </a>
+        <a href={href("/visit#contact")}
+           class="font-accent text-xs tracking-widest uppercase py-3 px-6 rounded no-underline transition-all duration-300"
+           style="background:#fdf8f0;color:#9a6e0a;border:1px solid rgba(154,110,10,0.3);">
+          {t("cta_call", locale)}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

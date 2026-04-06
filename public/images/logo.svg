@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e5035"/>
+      <stop offset="100%" stop-color="#0b2318"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c9952a"/>
+      <stop offset="50%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#c9952a"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#c9952a"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bgGrad)"/>
+  <circle cx="100" cy="100" r="96" stroke="url(#goldGrad)" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="82" stroke="url(#goldGrad)" stroke-width="0.75" fill="none" opacity="0.3"/>
+
+  <!-- Gopuram — multi-tiered tower -->
+  <!-- Base platform -->
+  <rect x="58" y="152" width="84" height="10" rx="1" fill="url(#goldGrad)" opacity="0.85"/>
+  <rect x="63" y="144" width="74" height="10" rx="1" fill="url(#goldGrad)" opacity="0.7"/>
+
+  <!-- Main body -->
+  <rect x="72" y="110" width="56" height="36" fill="url(#goldGrad2)" opacity="0.5"/>
+  <rect x="72" y="110" width="56" height="36" stroke="url(#goldGrad)" stroke-width="0.75" fill="none" opacity="0.6"/>
+
+  <!-- Door arch -->
+  <rect x="89" y="122" width="22" height="24" rx="1" fill="#0b2318"/>
+  <path d="M89 134 Q100 122 111 134" stroke="url(#goldGrad)" stroke-width="1" fill="none"/>
+
+  <!-- Gopuram tiers -->
+  <polygon points="100,55 128,110 72,110" fill="url(#goldGrad2)" opacity="0.65"/>
+  <polygon points="100,68 123,104 77,104" fill="url(#goldGrad)" opacity="0.5"/>
+  <polygon points="100,80 118,98 82,98"  fill="url(#goldGrad2)" opacity="0.6"/>
+  <polygon points="100,90 113,94 87,94"  fill="url(#goldGrad)" opacity="0.55"/>
+
+  <!-- Kalasha (finial) -->
+  <ellipse cx="100" cy="53"  rx="7"   ry="9"   fill="url(#goldGrad)" opacity="0.9"/>
+  <ellipse cx="100" cy="46"  rx="5"   ry="6.5" fill="url(#goldGrad)" opacity="0.95"/>
+  <ellipse cx="100" cy="40"  rx="3.5" ry="5"   fill="url(#goldGrad)"/>
+  <circle  cx="100" cy="35"  r="3.5"            fill="#fde68a"/>
+  <line x1="100" y1="31" x2="100" y2="25" stroke="#fde68a" stroke-width="1.5"/>
+  <circle  cx="100" cy="23"  r="3"              fill="#fde68a"/>
+
+  <!-- Decorative corner pillars -->
+  <rect x="72"  y="110" width="6" height="42" rx="1" fill="url(#goldGrad)" opacity="0.6"/>
+  <rect x="122" y="110" width="6" height="42" rx="1" fill="url(#goldGrad)" opacity="0.6"/>
+
+  <!-- Side windows -->
+  <rect x="78"  y="120" width="10" height="12" rx="1" fill="#0b2318"/>
+  <rect x="112" y="120" width="10" height="12" rx="1" fill="#0b2318"/>
+
+  <!-- Decorative horizontal lines on gopuram -->
+  <line x1="72" y1="120" x2="128" y2="120" stroke="url(#goldGrad)" stroke-width="0.6" opacity="0.4"/>
+  <line x1="72" y1="130" x2="128" y2="130" stroke="url(#goldGrad)" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- Lotus petals at base -->
+  <ellipse cx="78"  cy="155" rx="9" ry="4" fill="url(#goldGrad)" opacity="0.2" transform="rotate(-25 78 155)"/>
+  <ellipse cx="122" cy="155" rx="9" ry="4" fill="url(#goldGrad)" opacity="0.2" transform="rotate(25 122 155)"/>
+  <ellipse cx="100" cy="160" rx="10" ry="3" fill="url(#goldGrad)" opacity="0.15"/>
+
+  <!-- Decorative dots on outer ring -->
+  <circle cx="100" cy="8"   r="2.5" fill="#f0b429" opacity="0.6"/>
+  <circle cx="100" cy="192" r="2.5" fill="#f0b429" opacity="0.6"/>
+  <circle cx="8"   cy="100" r="2.5" fill="#f0b429" opacity="0.6"/>
+  <circle cx="192" cy="100" r="2.5" fill="#f0b429" opacity="0.6"/>
+</svg>

@@ -1,0 +1,35 @@
+---
+import { LOCALES, LABELS } from "@i18n/locales";
+
+const currentLocale = Astro.currentLocale ?? "en";
+---
+
+<div class="lang-picker relative flex items-center">
+  <select
+    id="lang-select"
+    aria-label="Language"
+    class="appearance-none bg-forest-mid/60 border text-text-sec font-heading uppercase tracking-widest
+           py-1.5 pl-3 pr-7 rounded cursor-pointer transition-all duration-300
+           focus:outline-none focus:border-gold-dim hover:border-gold-dim hover:text-gold text-[0.65rem]"
+    style="border-color: var(--border-gold);"
+  >
+    {LOCALES.map((l) => (
+      <option value={l} selected={l === currentLocale}>{LABELS[l]}</option>
+    ))}
+  </select>
+  <span class="absolute right-2 text-gold-dim text-[0.6rem] pointer-events-none">▾</span>
+</div>
+
+<script>
+  (function () {
+    const sel = document.getElementById("lang-select") as HTMLSelectElement | null;
+    sel?.addEventListener("change", function () {
+      const lang = this.value;
+      try { document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=31536000; SameSite=Lax`; }
+      catch { try { localStorage.setItem("lang", lang); } catch {} }
+      const path = location.pathname.replace(/^\/([A-Za-z]{2}(?:-[A-Za-z]+)?)\//, "");
+      const url = ("/" + lang + "/" + path).replace(/\/+$/, "/") + location.search;
+      location.href = url;
+    });
+  })();
+</script>
