@@ -67,24 +67,24 @@ const links = [
         <LanguagePicker />
         <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false"
                 class="flex flex-col items-center justify-center gap-1.5 w-10 h-10 rounded transition-all duration-300"
-                style="border:1px solid rgba(240,180,41,0.35);background:transparent;color:#f0b429;">
-          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar1"></span>
-          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar2"></span>
-          <span class="block w-5 h-px bg-current transition-all duration-300" id="bar3"></span>
+                style="border:1px solid rgba(154,110,10,0.5);background:rgba(253,248,240,0.9);color:#9a6e0a;">
+          <span class="block w-5 h-0.5 bg-current transition-all duration-300" id="bar1"></span>
+          <span class="block w-5 h-0.5 bg-current transition-all duration-300" id="bar2"></span>
+          <span class="block w-5 h-0.5 bg-current transition-all duration-300" id="bar3"></span>
         </button>
       </div>
     </div>
 
     <!-- Mobile menu -->
-    <div id="nav-mobile" class="hidden flex-col lg:hidden border-t mt-3 pt-2"
-         style="border-color:rgba(154,110,10,0.2);">
+    <div id="nav-mobile" class="hidden flex-col lg:hidden mt-2 pb-3 rounded-lg"
+         style="background:#fdf8f0; border:1px solid rgba(154,110,10,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.1);">
       {links.map(({ label, path }) => (
         <a href={href(path)}
            class:list={[
-             "font-accent text-xs tracking-[0.18em] uppercase py-3.5 px-1 transition-all duration-200 no-underline border-b",
-             isActive(path) ? "text-gold" : "text-text-sec hover:text-gold",
+             "font-accent tracking-[0.2em] uppercase py-4 px-5 no-underline border-b font-semibold",
+             isActive(path) ? "text-gold" : "text-ivory hover:text-gold",
            ]}
-           style="border-color:rgba(154,110,10,0.15);">
+           style="font-size:0.82rem; border-color:rgba(154,110,10,0.12);">
           {label}
         </a>
       ))}
@@ -121,11 +121,19 @@ const links = [
     const open = mobile?.classList.toggle("hidden") === false;
     mobile?.classList.toggle("flex", open);
     toggle.setAttribute("aria-expanded", String(open));
+    // Always show solid background when menu is open
+    if (open) {
+      nav?.style.setProperty("background", "rgba(253,248,240,0.98)");
+      nav?.style.setProperty("backdrop-filter", "blur(16px)");
+      nav?.style.setProperty("box-shadow", "0 4px 32px rgba(0,0,0,0.08)");
+    } else {
+      scrolled(); // restore scroll-based background
+    }
     if (bar1 && bar2 && bar3) {
       if (open) {
-        bar1.style.transform = "rotate(45deg) translate(4px,5px)";
+        bar1.style.transform = "rotate(45deg) translate(4px,6px)";
         bar2.style.opacity   = "0";
-        bar3.style.transform = "rotate(-45deg) translate(4px,-5px)";
+        bar3.style.transform = "rotate(-45deg) translate(4px,-6px)";
       } else {
         [bar1, bar2, bar3].forEach(b => { b.style.transform = ""; b.style.opacity = ""; });
       }

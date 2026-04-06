@@ -15,7 +15,7 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; font-size: 17px; }
+  html { scroll-behavior: smooth; font-size: 18px; }
 
   body {
     @apply bg-svk-bg text-text-prim font-body overflow-x-hidden;
@@ -29,16 +29,16 @@
     @apply font-display text-gold leading-tight;
     letter-spacing: 0.02em;
   }
-  h1 { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 600; }
-  h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 600; }
-  h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 500; }
-  h4 { font-size: 1.1rem; font-weight: 500; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; }
+  h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700; }
+  h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 600; }
+  h4 { font-size: 1.15rem; font-weight: 600; }
 
-  p  { @apply text-text-sec leading-relaxed mb-4 last:mb-0 font-body; font-size: 1rem; font-weight: 400; }
+  p  { @apply text-ivory leading-relaxed mb-4 last:mb-0 font-body; font-size: 1.05rem; font-weight: 500; }
   a  { @apply text-gold transition-colors duration-300 no-underline; }
-  a:hover { @apply text-gold-pale; }
-  em { @apply text-sage not-italic; }
-  strong { @apply text-ivory font-semibold; }
+  a:hover { @apply text-gold-dim; }
+  em { @apply text-jade not-italic font-semibold; }
+  strong { @apply text-ivory font-bold; }
 }
 
 @layer components {
@@ -77,10 +77,11 @@
   .section-label {
     display: block;
     font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.28em;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #4a7a5a;
+    color: #2a6040;
+    font-weight: 600;
     margin-bottom: 0.6rem;
   }
 
