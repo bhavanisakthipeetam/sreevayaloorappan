@@ -6,8 +6,20 @@ const locale = Astro.currentLocale ?? "en";
 const href = (p: string) => getRelativeLocaleUrl(locale, p);
 ---
 
-<footer class="pt-14 pb-8" style="background:#f0e8d8; border-top: 1px solid var(--border-gold);">
-  <div class="max-w-6xl mx-auto px-6">
+<footer class="pb-8" style="background:#f0e8d8; border-top: 1px solid var(--border-gold);">
+
+  <!-- Nameplate banner -->
+  <div class="w-full overflow-hidden" style="border-bottom:1px solid var(--border-gold);">
+    <img
+      src="/images/temple-nameplat.jpeg"
+      alt="Sree Vayaloorappan Kiratha Sastha Kshetram"
+      class="w-full object-contain"
+      style="max-height:120px; background:#fdf8f0;"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 pt-12">
 
     <!-- Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-10">
