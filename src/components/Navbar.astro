@@ -76,12 +76,12 @@ const links = [
     </div>
 
     <!-- Mobile menu -->
-    <div id="nav-mobile" class="hidden flex-col lg:hidden mt-2 pb-3 rounded-lg"
-         style="background:#fdf8f0; border:1px solid rgba(154,110,10,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.1);">
+    <div id="nav-mobile" class="lg:hidden mt-2 pb-3 rounded-lg"
+         style="display:none; background:#fdf8f0; border:1px solid rgba(154,110,10,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.1);">
       {links.map(({ label, path }) => (
         <a href={href(path)}
            class:list={[
-             "font-accent tracking-[0.2em] uppercase py-4 px-5 no-underline border-b font-semibold",
+             "block font-accent tracking-[0.2em] uppercase py-4 px-5 no-underline border-b font-semibold",
              isActive(path) ? "text-gold" : "text-ivory hover:text-gold",
            ]}
            style="font-size:0.82rem; border-color:rgba(154,110,10,0.12);">
@@ -117,20 +117,21 @@ const links = [
   const bar1   = document.getElementById("bar1");
   const bar2   = document.getElementById("bar2");
   const bar3   = document.getElementById("bar3");
+  let menuOpen = false;
   toggle?.addEventListener("click", () => {
-    const open = mobile?.classList.toggle("hidden") === false;
-    mobile?.classList.toggle("flex", open);
-    toggle.setAttribute("aria-expanded", String(open));
-    // Always show solid background when menu is open
-    if (open) {
+    menuOpen = !menuOpen;
+    if (mobile) mobile.style.display = menuOpen ? "flex" : "none";
+    if (mobile) mobile.style.flexDirection = "column";
+    toggle.setAttribute("aria-expanded", String(menuOpen));
+    if (menuOpen) {
       nav?.style.setProperty("background", "rgba(253,248,240,0.98)");
       nav?.style.setProperty("backdrop-filter", "blur(16px)");
       nav?.style.setProperty("box-shadow", "0 4px 32px rgba(0,0,0,0.08)");
     } else {
-      scrolled(); // restore scroll-based background
+      scrolled();
     }
     if (bar1 && bar2 && bar3) {
-      if (open) {
+      if (menuOpen) {
         bar1.style.transform = "rotate(45deg) translate(4px,6px)";
         bar2.style.opacity   = "0";
         bar3.style.transform = "rotate(-45deg) translate(4px,-6px)";
