@@ -12,29 +12,24 @@ const locale = Astro.currentLocale ?? "en";
 const href = (p: string) => getRelativeLocaleUrl(locale, p);
 
 const hills = [
-  { dir: "East",  dirsub: "",         name: "Varadu Malai",       detail: "Direction of Indra · Protection & Prosperity" },
-  { dir: "SE",    dirsub: "Agni",     name: "Thumbiyar Mudi",     detail: "Direction of Agni · Sacred Fire Energy" },
-  { dir: "South", dirsub: "",         name: "Elai Malai",         detail: "Direction of Yama · Ancestral Blessings" },
-  { dir: "SW",    dirsub: "Niruthi",  name: "Kallada Kotta Mala", detail: "Direction of Niruthi · Protection from Obstacles" },
-  { dir: "West",  dirsub: "",         name: "Malleswara Mudi",    detail: "Direction of Varuna · Divine Order" },
-  { dir: "NW",    dirsub: "Vaayu",    name: "Kotta Malai",        detail: "Direction of Vayu · Breath & Life Force" },
-  { dir: "North", dirsub: "",         name: "Chavadi Malai",      detail: "Direction of Kubera · Wealth & Abundance" },
-  { dir: "NE",    dirsub: "Eesanyam", name: "Perumal Malai",      detail: "Direction of Eesan · Spiritual Knowledge" },
-];
+  { dirKey:"hill_e_dir",  dirsub: "",          nameKey:"hill_e_name",  detailKey:"hill_e_detail"  },
+  { dirKey:"hill_se_dir", dirsub: "Agni",      nameKey:"hill_se_name", detailKey:"hill_se_detail" },
+  { dirKey:"hill_s_dir",  dirsub: "",          nameKey:"hill_s_name",  detailKey:"hill_s_detail"  },
+  { dirKey:"hill_sw_dir", dirsub: "Niruthi",   nameKey:"hill_sw_name", detailKey:"hill_sw_detail" },
+  { dirKey:"hill_w_dir",  dirsub: "",          nameKey:"hill_w_name",  detailKey:"hill_w_detail"  },
+  { dirKey:"hill_nw_dir", dirsub: "Vaayu",     nameKey:"hill_nw_name", detailKey:"hill_nw_detail" },
+  { dirKey:"hill_n_dir",  dirsub: "",          nameKey:"hill_n_name",  detailKey:"hill_n_detail"  },
+  { dirKey:"hill_ne_dir", dirsub: "Eesanyam",  nameKey:"hill_ne_name", detailKey:"hill_ne_detail" },
+] as const;
 ---
 
 <BaseLayout title={t("nav_history", locale)} description={t("history_desc", locale)}>
 
-  <!-- PAGE HERO with temple-front image as background -->
+  <!-- PAGE HERO -->
   <section class="relative overflow-hidden text-center py-36" style="border-bottom:1px solid var(--border-gold);">
-    <!-- Background photo -->
     <div class="absolute inset-0" aria-hidden="true">
-      <img
-        src="/images/temple-render.jpg"
-        alt=""
-        class="w-full h-full object-cover"
-        style="opacity:0.18; filter: sepia(0.4) saturate(0.6);"
-      />
+      <img src="/images/temple-render.jpg" alt="" class="w-full h-full object-cover"
+           style="opacity:0.18; filter: sepia(0.4) saturate(0.6);" />
       <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.82) 100%);"></div>
     </div>
     <div class="relative z-10 max-w-2xl mx-auto px-6">
@@ -51,14 +46,10 @@ const hills = [
 
     <div class="relative max-w-6xl mx-auto px-6">
       <div class="max-w-2xl mx-auto mb-14 reveal">
-        <span class="section-label">Kaatalam · Ancient Forest Era</span>
-        <h2 class="mb-4">Rooted in Primordial Time</h2>
+        <span class="section-label">{t("antiquity_label", locale)}</span>
+        <h2 class="mb-4">{t("antiquity_heading", locale)}</h2>
         <span class="divider-sm"></span>
-        <p>
-          The spiritual presence at Vayaloor stretches back to what ancient texts call <em class="text-sage">Aadi</em> —
-          the very beginning — also referred to as the <em class="text-sage">Kaatalam</em>, the ancient forest era.
-          The worship here is deeply intertwined with the ancient spiritual traditions of the Sangam period.
-        </p>
+        <p>{t("antiquity_body", locale)}</p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-8">
@@ -68,47 +59,31 @@ const hills = [
             <h3 class="mb-3">{t("seyyon_heading", locale)}</h3>
             <span class="divider-sm"></span>
             <p>{t("seyyon_body", locale)}</p>
-            <p class="text-sm text-text-mute mt-3">
-              Known as <em>Murugan</em> in broader tradition and <em>Seyyon</em> in Sangam poetry, the deity of the hills
-              is described as radiant, bearing the sacred Vel (spear). At Vayaloor, He assumes the Kiratha (hunter) form of Sastha.
-            </p>
+            <p class="text-sm text-text-mute mt-3">{t("seyyon_extra", locale)}</p>
           </div>
 
           <div class="lore-block reveal reveal-d1">
             <h3 class="mb-3">{t("kottravai_heading", locale)}</h3>
             <span class="divider-sm"></span>
             <p>{t("kottravai_body", locale)}</p>
-            <p class="text-sm text-text-mute mt-3">
-              Kottravai, the ancient war goddess of the Sangam texts, is deeply connected to the historic Shankarodath Kovilakam —
-              a royal lineage temple house forming part of the sacred heritage of this Kshetram.
-            </p>
+            <p class="text-sm text-text-mute mt-3">{t("kottravai_extra", locale)}</p>
           </div>
         </div>
 
         <!-- Right: temple photo + quote -->
         <div class="reveal reveal-d2">
-          <div
-            class="rounded-lg overflow-hidden mb-6"
-            style="border:1px solid var(--border-gold); aspect-ratio:4/3;"
-          >
-            <img
-              src="/images/temple-render.jpg"
-              alt="Sree Vayaloorappan Kshetram Gopuram"
-              class="w-full h-full object-cover"
-              style="filter: sepia(0.25) saturate(0.8);"
-              loading="lazy"
-            />
+          <div class="rounded-lg overflow-hidden mb-6"
+               style="border:1px solid var(--border-gold); aspect-ratio:4/3;">
+            <img src="/images/temple-render.jpg" alt="Sree Vayaloorappan Kshetram"
+                 class="w-full h-full object-cover"
+                 style="filter: sepia(0.25) saturate(0.8);" loading="lazy" />
           </div>
 
-          <div
-            class="rounded-lg p-7"
-            style="background:rgba(255,253,247,0.9); border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);"
-          >
-            <p class="font-heading text-sage tracking-[0.2em] uppercase text-xs mb-3">Sangam Period</p>
-            <p class="font-body italic text-ivory-dim text-lg leading-relaxed mb-3">
-              "The red-hued youth of the mountains, who rides the peacock and bears the spear, is the guardian of the kurinji lands."
-            </p>
-            <p class="font-heading text-text-mute tracking-widest text-xs">— Purananuru Tradition</p>
+          <div class="rounded-lg p-7"
+               style="background:rgba(255,253,247,0.9); border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+            <p class="font-heading text-sage tracking-[0.2em] uppercase text-xs mb-3">{t("sangam_period_label", locale)}</p>
+            <p class="font-body italic text-ivory-dim text-lg leading-relaxed mb-3">{t("sangam_quote", locale)}</p>
+            <p class="font-heading text-text-mute tracking-widest text-xs">{t("sangam_source", locale)}</p>
           </div>
         </div>
       </div>
@@ -116,11 +91,8 @@ const hills = [
   </section>
 
   <!-- EIGHT HILLS -->
-  <section
-    id="hills"
-    class="py-24"
-    style="background:#f5ede0; border-top:1px solid var(--border-gold); border-bottom:1px solid var(--border-gold);"
-  >
+  <section id="hills" class="py-24"
+    style="background:#f5ede0; border-top:1px solid var(--border-gold); border-bottom:1px solid var(--border-gold);">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-xl mx-auto mb-12 reveal">
         <span class="section-label">{t("hills_label", locale)}</span>
@@ -130,44 +102,32 @@ const hills = [
       </div>
 
       <!-- Hills architectural map -->
-      <div
-        class="w-full rounded-lg overflow-hidden mb-10 reveal mx-auto"
-        style="max-width:700px; border:1px solid var(--border-gold); box-shadow:0 4px 24px rgba(0,0,0,0.08);"
-      >
-        <img
-          src="/images/temple-ma.jpeg"
-          alt="Architectural map of Sree Vayaloorappan Kshetram with eight sacred hills"
-          class="w-full h-auto"
-          loading="lazy"
-        />
+      <div class="w-full rounded-lg overflow-hidden mb-10 reveal mx-auto"
+           style="max-width:700px; border:1px solid var(--border-gold); box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+        <img src="/images/temple-ma.jpeg"
+             alt="Architectural map of Sree Vayaloorappan Kshetram with eight sacred hills"
+             class="w-full h-auto" loading="lazy" />
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto reveal">
-        {hills.map(({ dir, dirsub, name, detail }) => (
+        {hills.map(({ dirKey, dirsub, nameKey, detailKey }) => (
           <div class="mountain-item">
             <span class="dir-badge shrink-0">
-              {dir}{dirsub ? ` · ${dirsub}` : ""}
+              {t(dirKey, locale)}{dirsub ? ` · ${dirsub}` : ""}
             </span>
             <div>
-              <div class="font-heading text-ivory text-sm">{name}</div>
-              <div class="font-heading text-text-mute tracking-widest mt-0.5" style="font-size:0.62rem;">{detail}</div>
+              <div class="font-heading text-ivory text-sm">{t(nameKey, locale)}</div>
+              <div class="font-heading text-text-mute tracking-widest mt-0.5" style="font-size:0.62rem;">{t(detailKey, locale)}</div>
             </div>
           </div>
         ))}
       </div>
 
       <!-- Cosmic significance -->
-      <div
-        class="max-w-2xl mx-auto mt-14 text-center rounded-lg p-10 reveal"
-        style="background:rgba(255,253,247,0.9); border:1px solid var(--border-gold); box-shadow:0 2px 16px rgba(0,0,0,0.05);"
-      >
-        <h3 class="mb-4">The Cosmic Vastu of the Kshetram</h3>
-        <p>
-          In Hindu sacred geography, a temple guarded by peaks in all eight directions
-          (<em class="text-sage">Ashtadik Palas</em>) is considered a supremely energized location.
-          The eight mountains form a natural <em class="text-sage">mandala</em> — a cosmic enclosure
-          that concentrates and amplifies divine energy within.
-        </p>
+      <div class="max-w-2xl mx-auto mt-14 text-center rounded-lg p-10 reveal"
+           style="background:rgba(255,253,247,0.9); border:1px solid var(--border-gold); box-shadow:0 2px 16px rgba(0,0,0,0.05);">
+        <h3 class="mb-4">{t("cosmic_heading", locale)}</h3>
+        <p>{t("cosmic_body", locale)}</p>
       </div>
     </div>
   </section>
@@ -175,8 +135,8 @@ const hills = [
   <!-- CTA -->
   <section class="py-14 text-center" style="background:#f0e8d8; border-top:1px solid var(--border-gold);">
     <div class="max-w-lg mx-auto px-6">
-      <h3 class="mb-3">Experience the Sacred Offerings</h3>
-      <p class="mb-8">Seek divine blessings through the time-honored rituals of Sree Vayaloorappan Kshetram.</p>
+      <h3 class="mb-3">{t("cta_offerings_title", locale)}</h3>
+      <p class="mb-8">{t("cta_offerings_desc", locale)}</p>
       <a href={href("/offerings")} class="btn-gold">{t("nav_offerings", locale)}</a>
     </div>
   </section>

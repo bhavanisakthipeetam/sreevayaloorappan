@@ -12,31 +12,27 @@ const locale = Astro.currentLocale ?? "en";
 const href   = (p: string) => getRelativeLocaleUrl(locale, p);
 
 const pooramDates = [
-  { month: "Meenam",     period: "March / April",  status: "upcoming" },
-  { month: "Medam",      period: "April / May",     status: "pending" },
-  { month: "Edavam",     period: "May / June",      status: "pending" },
-  { month: "Mithunam",   period: "June / July",     status: "pending" },
-  { month: "Karkidakam", period: "July / August",   status: "pending" },
-];
+  { monthKey: "month_meenam",     periodKey: "period_meenam",     status: "upcoming" },
+  { monthKey: "month_medam",      periodKey: "period_medam",      status: "pending"  },
+  { monthKey: "month_edavam",     periodKey: "period_edavam",     status: "pending"  },
+  { monthKey: "month_mithunam",   periodKey: "period_mithunam",   status: "pending"  },
+  { monthKey: "month_karkidakam", periodKey: "period_karkidakam", status: "pending"  },
+] as const;
 
 const tips = [
-  { icon: "📅", title: "Book in Advance",  body: "Contact the temple before the Pooram date to confirm your offering and plan travel." },
-  { icon: "👗", title: "Dress Code",        body: "Traditional attire is preferred. Devotees are requested to dress modestly and respectfully." },
-  { icon: "🕗", title: "Arrive Early",      body: "Darshan closes at 12:00 PM sharp. Arriving before 8 AM ensures a peaceful experience." },
-];
+  { icon: "📅", titleKey: "tip_1_title", bodyKey: "tip_1_body" },
+  { icon: "👗", titleKey: "tip_2_title", bodyKey: "tip_2_body" },
+  { icon: "🕗", titleKey: "tip_3_title", bodyKey: "tip_3_body" },
+] as const;
 ---
 
 <BaseLayout title={t("nav_visit", locale)} description={t("visit_desc", locale)}>
 
-  <!-- PAGE HERO with forest path image -->
+  <!-- PAGE HERO -->
   <section class="relative overflow-hidden text-center py-36" style="border-bottom:1px solid var(--border-gold);">
     <div class="absolute inset-0" aria-hidden="true">
-      <img
-        src="/images/temple-render.jpg"
-        alt=""
-        class="w-full h-full object-cover"
-        style="opacity:0.18; filter: sepia(0.4) saturate(0.6);"
-      />
+      <img src="/images/temple-render.jpg" alt="" class="w-full h-full object-cover"
+           style="opacity:0.18; filter: sepia(0.4) saturate(0.6);" />
       <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.82) 100%);"></div>
     </div>
     <div class="relative z-10 max-w-2xl mx-auto px-6">
@@ -56,9 +52,9 @@ const tips = [
         <p class="m-0" style="color:rgba(245,237,216,0.9);">{t("darshan_body", locale)}</p>
       </div>
       <div class="text-center rounded-lg px-8 py-5 flex-shrink-0" style="background:rgba(0,0,0,0.25);">
-        <p class="font-heading tracking-widest uppercase mb-1" style="font-size:0.6rem; color:rgba(245,237,216,0.6);">Timings</p>
+        <p class="font-heading tracking-widest uppercase mb-1" style="font-size:0.6rem; color:rgba(245,237,216,0.6);">{t("timings_label", locale)}</p>
         <p class="font-heading text-xl m-0" style="color:#f5edd8;">{t("darshan_time", locale)}</p>
-        <p class="text-xs mt-1 m-0" style="color:rgba(245,237,216,0.7);">Pooram Nakshatra only</p>
+        <p class="text-xs mt-1 m-0" style="color:rgba(245,237,216,0.7);">{t("pooram_only", locale)}</p>
       </div>
     </div>
   </section>
@@ -78,21 +74,21 @@ const tips = [
           <div class="info-row">
             <div class="info-icon">✈️</div>
             <div>
-              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">By Air</strong>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t("by_air_label", locale)}</strong>
               <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_air", locale)}</p>
             </div>
           </div>
           <div class="info-row">
             <div class="info-icon">🚂</div>
             <div>
-              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">By Train</strong>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t("by_train_label", locale)}</strong>
               <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_train", locale)}</p>
             </div>
           </div>
           <div class="info-row">
             <div class="info-icon">📍</div>
             <div>
-              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Address</strong>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t("address_label", locale)}</strong>
               <p class="text-sm m-0 mt-1 text-text-mute">{t("reach_address", locale)}</p>
             </div>
           </div>
@@ -104,13 +100,13 @@ const tips = [
 
         <!-- Travel tips -->
         <div class="rounded-lg p-8 reveal reveal-d1" style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-          <h3 class="text-base mb-6 pb-4" style="border-bottom:1px solid var(--border-gold-light);">🧳 Travel Tips</h3>
-          {tips.map(({ icon, title, body }) => (
+          <h3 class="text-base mb-6 pb-4" style="border-bottom:1px solid var(--border-gold-light);">🧳 {t("travel_tips_heading", locale)}</h3>
+          {tips.map(({ icon, titleKey, bodyKey }) => (
             <div class="info-row">
               <div class="info-icon">{icon}</div>
               <div>
-                <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{title}</strong>
-                <p class="text-sm m-0 mt-1 text-text-mute">{body}</p>
+                <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t(titleKey, locale)}</strong>
+                <p class="text-sm m-0 mt-1 text-text-mute">{t(bodyKey, locale)}</p>
               </div>
             </div>
           ))}
@@ -130,7 +126,7 @@ const tips = [
           <div class="info-row">
             <div class="info-icon">📱</div>
             <div>
-              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Phone / WhatsApp</strong>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t("phone_label", locale)}</strong>
               <p class="font-heading text-gold tracking-widest mt-1 m-0" style="font-size:1rem;">
                 [Contact Number to be added]
               </p>
@@ -139,14 +135,14 @@ const tips = [
           <div class="info-row">
             <div class="info-icon">✉️</div>
             <div>
-              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">Email</strong>
+              <strong class="block font-heading text-ivory text-xs tracking-widest uppercase">{t("email_label", locale)}</strong>
               <p class="text-gold mt-1 m-0">[Email to be added]</p>
             </div>
           </div>
 
           <div class="flex gap-3 flex-wrap mt-6">
             <a href="tel:" class="btn-gold flex-1 text-center">{t("cta_call", locale)}</a>
-            <a href="mailto:" class="btn-outline flex-1 text-center">Email Temple</a>
+            <a href="mailto:" class="btn-outline flex-1 text-center">{t("email_temple", locale)}</a>
           </div>
         </div>
 
@@ -155,51 +151,45 @@ const tips = [
           <h3 class="text-base mb-4 pb-4" style="border-bottom:1px solid var(--border-gold-light);">
             🌟 {t("upcoming_heading", locale)}
           </h3>
-          <p class="text-sm mb-4">Darshan is held once every Malayalam month on Pooram Nakshatra. Contact the temple for exact dates.</p>
+          <p class="text-sm mb-4">{t("pooram_schedule_desc", locale)}</p>
 
           <table class="pooram-table">
             <thead>
               <tr>
-                <th>Malayalam Month</th>
-                <th>Approx. Period</th>
-                <th>Status</th>
+                <th>{t("month_col", locale)}</th>
+                <th>{t("period_col", locale)}</th>
+                <th>{t("status_col", locale)}</th>
               </tr>
             </thead>
             <tbody>
-              {pooramDates.map(({ month, period, status }) => (
+              {pooramDates.map(({ monthKey, periodKey, status }) => (
                 <tr>
-                  <td>{month}</td>
-                  <td>{period}</td>
+                  <td>{t(monthKey, locale)}</td>
+                  <td>{t(periodKey, locale)}</td>
                   <td style={status === "upcoming" ? "color:#6b9b6e;" : "color:#8a7a5a;"}>
-                    {status === "upcoming" ? "◉ Upcoming" : "○ Confirm"}
+                    {status === "upcoming" ? t("status_upcoming", locale) : t("status_confirm", locale)}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          <p class="text-xs text-text-mute mt-4 italic">
-            * Exact dates vary each year. Please contact the temple directly to confirm.
-          </p>
+          <p class="text-xs text-text-mute mt-4 italic">{t("dates_note", locale)}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MAP AREA with aerial/map image -->
+  <!-- MAP AREA -->
   <section style="border-top:1px solid var(--border-gold);">
     <div class="relative w-full overflow-hidden" style="height:280px;">
-      <img
-        src="/images/temple-ma.jpeg"
-        alt="Aerial view of Vayaloor temple area"
-        class="w-full h-full object-cover"
-        style="opacity:0.55; filter: sepia(0.2) saturate(0.85);"
-        loading="lazy"
-      />
+      <img src="/images/temple-ma.jpeg" alt="Aerial view of Vayaloor temple area"
+           class="w-full h-full object-cover"
+           style="opacity:0.55; filter: sepia(0.2) saturate(0.85);" loading="lazy" />
       <div class="absolute inset-0" style="background: rgba(253,248,240,0.6);"></div>
       <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <h3 class="text-base mb-2">Sree Vayaloorappan Kshetram</h3>
-        <p class="text-text-mute text-sm mb-6">Vayaloor, Kerala</p>
+        <h3 class="text-base mb-2">{t("map_temple_name", locale)}</h3>
+        <p class="text-text-mute text-sm mb-6">{t("map_location", locale)}</p>
         <a href="https://maps.google.com?q=Vayaloor+Kerala" target="_blank" rel="noopener" class="btn-outline">
           {t("cta_directions", locale)}
         </a>

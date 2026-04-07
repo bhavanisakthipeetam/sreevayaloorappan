@@ -27,15 +27,15 @@ const offerings = [
 ] as const;
 
 const hills = [
-  { dir:"E",  name:"Varadu Malai" },
-  { dir:"SE", name:"Thumbiyar Mudi" },
-  { dir:"S",  name:"Elai Malai" },
-  { dir:"SW", name:"Kallada Kotta Mala" },
-  { dir:"W",  name:"Malleswara Mudi" },
-  { dir:"NW", name:"Kotta Malai" },
-  { dir:"N",  name:"Chavadi Malai" },
-  { dir:"NE", name:"Perumal Malai" },
-];
+  { dirKey:"hill_e_dir",  nameKey:"hill_e_name"  },
+  { dirKey:"hill_se_dir", nameKey:"hill_se_name" },
+  { dirKey:"hill_s_dir",  nameKey:"hill_s_name"  },
+  { dirKey:"hill_sw_dir", nameKey:"hill_sw_name" },
+  { dirKey:"hill_w_dir",  nameKey:"hill_w_name"  },
+  { dirKey:"hill_nw_dir", nameKey:"hill_nw_name" },
+  { dirKey:"hill_n_dir",  nameKey:"hill_n_name"  },
+  { dirKey:"hill_ne_dir", nameKey:"hill_ne_name" },
+] as const;
 ---
 
 <BaseLayout title={t("nav_home", locale)}>
@@ -175,10 +175,10 @@ const hills = [
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 reveal max-w-3xl mx-auto">
-        {hills.map(({ dir, name }) => (
+        {hills.map(({ dirKey, nameKey }) => (
           <div class="mountain-item">
-            <span class="dir-badge">{dir}</span>
-            <span class="font-body text-ivory" style="font-size:0.88rem; font-weight:500;">{name}</span>
+            <span class="dir-badge">{t(dirKey, locale)}</span>
+            <span class="font-body text-ivory" style="font-size:0.88rem; font-weight:500;">{t(nameKey, locale)}</span>
           </div>
         ))}
       </div>

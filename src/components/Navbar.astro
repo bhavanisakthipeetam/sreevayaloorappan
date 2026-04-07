@@ -76,15 +76,15 @@ const links = [
     </div>
 
     <!-- Mobile menu -->
-    <div id="nav-mobile" class="lg:hidden mt-2 pb-3 rounded-lg"
-         style="display:none; background:#fdf8f0; border:1px solid rgba(154,110,10,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.1);">
+    <div id="nav-mobile"
+         style="display:none; flex-direction:column; margin-top:0.5rem; padding-bottom:0.75rem; border-radius:0.5rem; background:#fdf8f0; border:1px solid rgba(154,110,10,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.1);">
       {links.map(({ label, path }) => (
         <a href={href(path)}
            class:list={[
-             "block font-accent tracking-[0.2em] uppercase py-4 px-5 no-underline border-b font-semibold",
-             isActive(path) ? "text-gold" : "text-ivory hover:text-gold",
+             "font-accent font-semibold no-underline border-b",
+             isActive(path) ? "text-gold" : "text-ivory",
            ]}
-           style="font-size:0.82rem; border-color:rgba(154,110,10,0.12);">
+           style="display:block; font-size:0.85rem; letter-spacing:0.2em; text-transform:uppercase; padding:1rem 1.25rem; border-color:rgba(154,110,10,0.12);">
           {label}
         </a>
       ))}

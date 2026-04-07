@@ -12,34 +12,18 @@ const locale = Astro.currentLocale ?? "en";
 const href   = (p: string) => getRelativeLocaleUrl(locale, p);
 
 const offerings = [
-  {
-    num: "01", nameKey: "off_1_name", subKey: "off_1_sub", bodyKey: "off_1_body",
-    tags: "Families · Ancestral healing · Kula restoration",
-    detail: "Many families across communities have lost their connection to their Kula Deivam through migration or generational gaps. This ritual re-establishes that sacred bond, invoking Sree Vayaloorappan to pacify ancestral spirits and restore the flow of divine grace through the family lineage.",
-  },
-  {
-    num: "02", nameKey: "off_2_name", subKey: "off_2_sub", bodyKey: "off_2_body",
-    tags: "Sade Sati · Ashtama Shani · Karmic relief",
-    detail: "Saturn's transits bring periods of intense karmic reckoning. The highly energized, mountain-protected field of Vayaloor provides a powerful counterbalancing force, transforming challenge into endurance and eventual liberation.",
-  },
-  {
-    num: "03", nameKey: "off_3_name", subKey: "off_3_sub", bodyKey: "off_3_body",
-    tags: "Protection · Negative energy removal · Shielding",
-    detail: "Sree Kiratha Sastha in His hunter aspect is the supreme vanquisher of enemies — not merely physical, but energetic and karmic. This ritual creates a powerful protective field around the devotee, reinforced by the fierce energy of Shankarodathamma.",
-  },
-  {
-    num: "04", nameKey: "off_4_name", subKey: "off_4_sub", bodyKey: "off_4_body",
-    tags: "All nine planets · Horoscope doshas · Full alignment",
-    detail: "The precise placement of the Kshetram within the mandala of eight mountain peaks creates one of the most potent Nava Graha healing environments available. Planetary doshas in a devotee's natal chart are specifically addressed and harmonized through this comprehensive ritual.",
-  },
+  { num: "01", nameKey: "off_1_name", subKey: "off_1_sub", bodyKey: "off_1_body", tagsKey: "off_1_tags", detailKey: "off_1_detail" },
+  { num: "02", nameKey: "off_2_name", subKey: "off_2_sub", bodyKey: "off_2_body", tagsKey: "off_2_tags", detailKey: "off_2_detail" },
+  { num: "03", nameKey: "off_3_name", subKey: "off_3_sub", bodyKey: "off_3_body", tagsKey: "off_3_tags", detailKey: "off_3_detail" },
+  { num: "04", nameKey: "off_4_name", subKey: "off_4_sub", bodyKey: "off_4_body", tagsKey: "off_4_tags", detailKey: "off_4_detail" },
 ] as const;
 
 const steps = [
-  { num: "1", title: "Contact Temple",  body: "Reach out via phone or WhatsApp to check the upcoming Pooram date and availability." },
-  { num: "2", title: "Choose Offering", body: "Select the pariharam most suited to your need. The temple priest can guide you if needed." },
-  { num: "3", title: "Confirm Booking", body: "Confirm your booking in advance. Darshan timings are 8:00 AM to 12:00 PM on Pooram day." },
-  { num: "4", title: "Attend & Receive", body: "Arrive with devotion. Receive the prasad and the blessings of the Lord." },
-];
+  { num: "1", titleKey: "step_1_title", bodyKey: "step_1_body" },
+  { num: "2", titleKey: "step_2_title", bodyKey: "step_2_body" },
+  { num: "3", titleKey: "step_3_title", bodyKey: "step_3_body" },
+  { num: "4", titleKey: "step_4_title", bodyKey: "step_4_body" },
+] as const;
 ---
 
 <BaseLayout title={t("nav_offerings", locale)} description={t("offerings_desc", locale)}>
@@ -62,28 +46,21 @@ const steps = [
         <!-- Left card -->
         <div class="text-center rounded-lg p-10" style="background:rgba(255,253,247,0.9); border:1px solid var(--border-gold); box-shadow:0 4px 20px rgba(0,0,0,0.06);">
           <div class="font-display text-5xl text-gold mb-4 opacity-80">ॐ</div>
-          <h3 class="text-base mb-2">Pooram Nakshatra</h3>
-          <p class="text-sm text-text-mute mb-5">All offerings are performed on the auspicious Pooram Nakshatra, once every Malayalam month.</p>
+          <h3 class="text-base mb-2">{t("pooram_card_title", locale)}</h3>
+          <p class="text-sm text-text-mute mb-5">{t("pooram_card_desc", locale)}</p>
           <span class="divider-sm block mx-auto"></span>
-          <p class="font-heading text-sage tracking-widest uppercase mt-4 mb-6" style="font-size:0.68rem;">8:00 AM TO 12:00 PM</p>
+          <p class="font-heading text-sage tracking-widest uppercase mt-4 mb-6" style="font-size:0.68rem;">{t("darshan_time", locale)}</p>
           <a href={href("/visit")} class="btn-outline w-full text-center block">{t("nav_visit", locale)}</a>
         </div>
 
         <!-- Right text -->
         <div>
-          <span class="section-label">About the Rituals</span>
-          <h2 class="mb-4">The Sacred Science of Pariharams</h2>
+          <span class="section-label">{t("rituals_label", locale)}</span>
+          <h2 class="mb-4">{t("rituals_heading", locale)}</h2>
           <span class="divider-sm"></span>
-          <p>
-            At Sree Vayaloorappan Kshetram, each ritual is not merely a ceremony but a precise
-            <em class="text-sage">karmic technology</em> — a specific invocation tuned to the nature of the devotee's need and the cosmic energies at work.
-          </p>
-          <p>
-            The mountain-guarded geography of Vayaloor creates an exceptionally powerful energetic field, amplifying the efficacy of every puja and pariharam performed here.
-          </p>
-          <p>
-            <strong class="text-ivory">Advance booking is strongly recommended</strong> as the temple is open only once per month on Pooram Nakshatra.
-          </p>
+          <p>{t("rituals_body1", locale)}</p>
+          <p>{t("rituals_body2", locale)}</p>
+          <p><strong class="text-ivory">{t("rituals_body3", locale)}</strong></p>
           <a href={href("/visit#contact")} class="btn-gold mt-4">{t("cta_book", locale)}</a>
         </div>
       </div>
@@ -94,34 +71,32 @@ const steps = [
   <section class="py-24" style="background:#fdf8f0;">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-12 reveal">
-        <span class="section-label">The Four Pariharams</span>
-        <h2>Sacred Offerings at Vayaloorappan</h2>
+        <span class="section-label">{t("four_pariharams_label", locale)}</span>
+        <h2>{t("four_pariharams_heading", locale)}</h2>
         <div class="divider-center"><span class="text-gold text-sm">✦</span></div>
       </div>
 
       <div class="space-y-5">
-        {offerings.map(({ num, nameKey, subKey, bodyKey, tags, detail }, i) => (
+        {offerings.map(({ num, nameKey, subKey, bodyKey, tagsKey, detailKey }, i) => (
           <div
             class:list={["grid lg:grid-cols-[1fr_2fr] gap-8 items-start rounded-lg p-8 reveal transition-all duration-300", i === 1 && "reveal-d1", i === 2 && "reveal-d2", i === 3 && "reveal-d3"]}
             style="background:#fffdf7; border:1px solid var(--border-gold); box-shadow:0 2px 16px rgba(0,0,0,0.05);"
           >
             <!-- Left -->
             <div>
-              <p class="font-display text-gold-dim tracking-[0.2em] text-xs mb-3">Offering {num}</p>
+              <p class="font-display text-gold-dim tracking-[0.2em] text-xs mb-3">{t("offering_prefix", locale)} {num}</p>
               <h2 class="text-xl mb-2">{t(nameKey, locale)}</h2>
               <p class="font-heading text-sage tracking-widest uppercase mb-5" style="font-size:0.68rem;">{t(subKey, locale)}</p>
               <span class="divider-sm"></span>
-              <p
-                class="font-heading text-text-mute tracking-widest mt-4 rounded px-3 py-2 text-[0.72rem]"
-                style="background:rgba(212,168,67,0.08); border:1px solid var(--border-gold-light);"
-              >
-                {tags}
+              <p class="font-heading text-text-mute tracking-widest mt-4 rounded px-3 py-2 text-[0.72rem]"
+                 style="background:rgba(212,168,67,0.08); border:1px solid var(--border-gold-light);">
+                {t(tagsKey, locale)}
               </p>
             </div>
             <!-- Right -->
             <div>
               <p class="text-ivory-dim text-base leading-loose mb-3">{t(bodyKey, locale)}</p>
-              <p class="text-sm text-text-mute">{detail}</p>
+              <p class="text-sm text-text-mute">{t(detailKey, locale)}</p>
             </div>
           </div>
         ))}
@@ -133,24 +108,20 @@ const steps = [
   <section class="py-24" style="background:#f5ede0; border-top:1px solid var(--border-gold);">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-12 reveal">
-        <span class="section-label">Booking Process</span>
-        <h2>How to Book an Offering</h2>
+        <span class="section-label">{t("booking_label", locale)}</span>
+        <h2>{t("booking_heading", locale)}</h2>
         <div class="divider-center"><span class="text-gold text-sm">✦</span></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
-        {steps.map(({ num, title, body }, i) => (
-          <div
-            class:list={["text-center p-6 reveal", i===1 && "reveal-d1", i===2 && "reveal-d2", i===3 && "reveal-d3"]}
-          >
-            <div
-              class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-5 font-display text-lg text-gold"
-              style="background:rgba(212,168,67,0.1); border:1px solid var(--border-gold);"
-            >
+        {steps.map(({ num, titleKey, bodyKey }, i) => (
+          <div class:list={["text-center p-6 reveal", i===1 && "reveal-d1", i===2 && "reveal-d2", i===3 && "reveal-d3"]}>
+            <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-5 font-display text-lg text-gold"
+                 style="background:rgba(212,168,67,0.1); border:1px solid var(--border-gold);">
               {num}
             </div>
-            <h3 class="text-sm mb-2">{title}</h3>
-            <p class="text-sm text-text-mute">{body}</p>
+            <h3 class="text-sm mb-2">{t(titleKey, locale)}</h3>
+            <p class="text-sm text-text-mute">{t(bodyKey, locale)}</p>
           </div>
         ))}
       </div>
